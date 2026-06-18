@@ -146,7 +146,7 @@ tbody tr:hover td:first-child{background:#f0f2ff}
 </div>
 <div class="toolbar">
   <label>👤 选择人员：</label>
-  <select id="personSelect"><option value="" selected>全部（按板块查看）</option><option value="__CHONGQING__">🏙️ 重庆（区域总览）</option><option value="何俊霖">何俊霖</option><option value="冉东">冉东</option><option value="冉茂营">冉茂营</option><option value="凌微波">凌微波</option><option value="刘翔博">刘翔博</option><option value="包键">包键</option><option value="周铈伦">周铈伦</option><option value="周锐挥">周锐挥</option><option value="张成鹏">张成鹏</option><option value="张智恒">张智恒</option><option value="彭杰">彭杰</option><option value="易庭宏">易庭宏</option><option value="朱恒臻">朱恒臻</option><option value="李星龙">李星龙</option><option value="李源">李源</option><option value="李荣">李荣</option><option value="杨彦">杨彦</option><option value="杨欢">杨欢</option><option value="杨豪">杨豪</option><option value="柳松林">柳松林</option><option value="熊文进">熊文进</option><option value="牟帅霖">牟帅霖</option><option value="王俊宇">王俊宇</option><option value="王思汗">王思汗</option><option value="王文">王文</option><option value="王科">王科</option><option value="王道潘">王道潘</option><option value="田江宏">田江宏</option><option value="符正培">符正培</option><option value="简浪">简浪</option><option value="简铭良">简铭良</option><option value="罗勇">罗勇</option><option value="蒋振龙">蒋振龙</option><option value="谭宏钟">谭宏钟</option><option value="陆试瑾">陆试瑾</option><option value="陈登科">陈登科</option><option value="陈金龙">陈金龙</option><option value="陈银">陈银</option><option value="陈青柱">陈青柱</option><option value="黄鸿骞">黄鸿骞</option><option value="龙德材">龙德材</option></select>
+  <select id="personSelect"></select>
   <span class="info" id="personInfo">已筛选：周锐挥</span>
 </div>
 <div class="nav-bar" id="navBar" style="display: none;"><span class="label">⚡ 快速跳转：</span><button data-idx="0">催单率</button><button data-idx="1">入库超时率</button><button data-idx="2">普通单过程数据</button><button data-idx="3">跟进及时率(到天)</button><button data-idx="4">加单率</button><button data-idx="5">ETA履约准时率</button><button data-idx="6">一站式过程数据</button><button data-idx="7">交付用户添加率</button><button data-idx="8">企微1v1回访率</button><button data-idx="9">企微回复及时率</button></div>
@@ -206,7 +206,10 @@ function barW(p){
   return p;
 }
 
-  sel.innerHTML='';D.people.forEach(function(p){var o=document.createElement('option');o.value=p;o.textContent=p;sel.appendChild(o)});
+  sel.innerHTML='';
+  var all=document.createElement('option');all.value='';all.textContent='全部（按板块查看）';all.selected=true;sel.appendChild(all);
+  var cq=document.createElement('option');cq.value='__CHONGQING__';cq.textContent='🏙️ 重庆（区域总览）';sel.appendChild(cq);
+  D.people.forEach(function(p){var o=document.createElement('option');o.value=p;o.textContent=p;sel.appendChild(o)});
   sel.addEventListener('change',render);
   render();
 
