@@ -206,7 +206,7 @@ function barW(p){
   return p;
 }
 
-  D.people.forEach(function(p){var o=document.createElement('option');o.value=p;o.textContent=p;sel.appendChild(o)});
+  sel.innerHTML='';D.people.forEach(function(p){var o=document.createElement('option');o.value=p;o.textContent=p;sel.appendChild(o)});
   sel.addEventListener('change',render);
   render();
 
