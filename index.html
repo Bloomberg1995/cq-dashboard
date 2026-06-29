@@ -184,7 +184,7 @@ function fmtPct(v){
 function pctCls(p){
   if(p==null||p===undefined||isNaN(p)) return '';
   if(p>=100) return 'pct-good';
-  if(p>=95) return 'pct-mid';
+  if(p>95) return 'pct-mid';
   return 'pct-bad';
 }
 
@@ -195,7 +195,7 @@ function valCls(ok){
 function barCls(p){
   if(p==null||p===undefined||isNaN(p)) return '';
   if(p>=100) return 'bar-good';
-  if(p>=95) return 'bar-mid';
+  if(p>95) return 'bar-mid';
   return 'bar-bad';
 }
 
@@ -254,7 +254,7 @@ function renderStatus(v,p){
   if(v==null||v===undefined) return 'status-unknown';
   if(p==null||p===undefined) return 'status-unknown';
   if(p>=100) return 'status-good';
-  if(p>=95) return 'status-mid';
+  if(p>95) return 'status-mid';
   return 'status-bad';
 }
 
@@ -358,7 +358,7 @@ function renderSingle(person){
   var h='';
 
   // === 急需改善模块：达成率 < 95% ===
-  var bad=all.filter(function(r){return r.pct!==null&&r.pct!==undefined&&r.pct<95});
+  var bad=all.filter(function(r){return r.pct!==null&&r.pct!==undefined&&r.pct<96});
   if(bad.length>0){
     h+='<div class="alert-section">';
     h+='<div class="alert-title">🚨 急需改善 <span class="count">'+bad.length+'项未达标（达成率&lt;95%）</span></div>';
@@ -459,9 +459,9 @@ function openCardDetail(cardIdx){
   h+='</tr></thead><tbody>';
 
   rows.forEach(function(r,idx){
-    var cls=r.pct<95?'val-bad':r.pct<100?'val-warn':'val-ok';
+    var cls=r.pct<96?'val-bad':r.pct<100?'val-warn':'val-ok';
     h+='<tr style="border-bottom:1px solid #eee">';
-    h+='<td style="padding:8px 10px;text-align:center;font-weight:600;color:#'+(idx<3?(r.pct<95?'c62828':'e65100'):'#999')+'">'+(idx+1)+'</td>';
+    h+='<td style="padding:8px 10px;text-align:center;font-weight:600;color:#'+(idx<3?(r.pct<96?'c62828':'e65100'):'#999')+'">'+(idx+1)+'</td>';
     h+='<td style="padding:8px 10px;font-weight:500">'+r.name+'</td>';
     h+='<td style="padding:8px 10px;text-align:center;color:#666">'+r.target+'</td>';
     h+='<td style="padding:8px 10px;text-align:center;'+cls+'">'+fmtVal(r.value)+'</td>';
