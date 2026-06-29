@@ -170,9 +170,9 @@ tbody tr:hover td:first-child{background:#f0f2ff}
 function fmtVal(v){
   if(v==null||v===undefined||isNaN(v)) return '-';
   var p=parseFloat(v);
-  if(Math.abs(p)>=5) return p.toFixed(3);
-  if(Math.abs(p)>=0.01) return (p*100).toFixed(1)+'%';
-  return p.toFixed(4);
+  if(p===0) return '0%';
+  if(Math.abs(p)>=3) return p.toFixed(3);
+  return (p*100).toFixed(1)+'%';
 }
 
 function fmtPct(v){
