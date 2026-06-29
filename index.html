@@ -184,7 +184,7 @@ function fmtPct(v){
 function pctCls(p){
   if(p==null||p===undefined||isNaN(p)) return '';
   if(p>=100) return 'pct-good';
-  if(p>=60) return 'pct-mid';
+  if(p>=95) return 'pct-mid';
   return 'pct-bad';
 }
 
@@ -195,7 +195,7 @@ function valCls(ok){
 function barCls(p){
   if(p==null||p===undefined||isNaN(p)) return '';
   if(p>=100) return 'bar-good';
-  if(p>=60) return 'bar-mid';
+  if(p>=95) return 'bar-mid';
   return 'bar-bad';
 }
 
@@ -253,8 +253,8 @@ function buildNav(){
 function renderStatus(v,p){
   if(v==null||v===undefined) return 'status-unknown';
   if(p==null||p===undefined) return 'status-unknown';
-  if(p>=95) return 'status-good';
-  if(p>=60) return 'status-mid';
+  if(p>=100) return 'status-good';
+  if(p>=95) return 'status-mid';
   return 'status-bad';
 }
 
