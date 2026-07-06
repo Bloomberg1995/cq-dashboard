@@ -257,7 +257,6 @@ function barW(p){
   sel.innerHTML='';
   var all=document.createElement('option');all.value='';all.textContent='全部（按板块查看）';all.selected=true;sel.appendChild(all);
   var cq=document.createElement('option');cq.value='__CHONGQING__';cq.textContent='🏙️ 重庆（区域总览）';sel.appendChild(cq);
-  var rk=document.createElement('option');rk.value='__RANKING__';rk.textContent='🏆 核心指标排名';sel.appendChild(rk);
   D.people.forEach(function(p){var o=document.createElement('option');o.value=p;o.textContent=p;sel.appendChild(o)});
   sel.addEventListener('change',render);
   render();
@@ -273,10 +272,6 @@ function render(){
     document.getElementById('navBar').style.display='none';
     document.getElementById('personInfo').textContent='重庆区域总览 — 按指标达标率排序（越差越前）';
     renderChongqing();
-  }else if(v==='__RANKING__'){
-    document.getElementById('navBar').style.display='none';
-    document.getElementById('personInfo').textContent='🏆 核心指标排名 — 加单率×50% + 场均达成率×50%';
-    renderRanking();
   }else{
     document.getElementById('navBar').style.display='none';
     document.getElementById('personInfo').textContent='已筛选：'+v;
@@ -313,6 +308,34 @@ function renderStatus(v,p){
 
 function renderSections(){
   var h='';
+  // ===== 前置：核心指标排名 =====
+  var rnk=D.ranking||[];
+  if(rnk.length>0){
+    h+='<div class="section"><div class="section-title">🏆 核心指标综合排名 <span class="target">加单率×50% + 场均达成率×50%</span></div>';
+    h+='<div class="table-wrap" style="overflow-x:auto"><table style="min-width:500px"><thead><tr>';
+    h+='<th style="width:60px;text-align:center">排名</th>';
+    h+='<th style="text-align:left">姓名</th>';
+    h+='<th style="text-align:center;width:140px">综合得分</th>';
+    h+='<th style="text-align:center;width:120px">📈 场均达成率</th>';
+    h+='<th style="text-align:center;width:120px">➕ 加单率</th>';
+    h+='</tr></thead><tbody>';
+
+    rnk.forEach(function(r){
+      var rankCls=r.rank<=3?'rank-top':r.rank<=10?'rank-mid':'rank-low';
+      h+='<tr>';
+      h+='<td style="text-align:center;font-weight:700;font-size:16px" class="'+rankCls+'">'+r.rank+'</td>';
+      h+='<td style="font-weight:600">'+r.name+'</td>';
+      var scorePct=Math.min(r.score,100);
+      var scoreCls=scorePct>=50?'bar-good':scorePct>=30?'bar-mid':'bar-bad';
+      h+='<td style="text-align:center"><div class="progress-bar" style="max-width:120px;margin:0 auto"><div class="progress-fill '+scoreCls+'" style="width:'+scorePct+'%"></div></div><span class="pct-num '+pctCls(scorePct)+'">'+r.score+'分</span></td>';
+      h+='<td style="text-align:center"><span class="pct-num '+pctCls(r.avg_pct)+'">'+r.avg_pct+'%</span></td>';
+      h+='<td style="text-align:center"><span class="pct-num '+pctCls(r.addon_pct)+'">'+r.addon_pct+'%</span></td>';
+      h+='</tr>';
+    });
+
+    h+='</tbody></table></div></div>';
+  }
+
   D.sections.forEach(function(sec,si){
     h+='<div class="section" id="sec_'+si+'">';
     h+='<div class="section-title">'+sec.name+' <span class="target">目标：'+sec.target+'</span></div>';
