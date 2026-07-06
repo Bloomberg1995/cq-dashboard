@@ -36,19 +36,27 @@ body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;backgr
 table{width:100%;border-collapse:collapse;min-width:100%;font-size:13px}
 
 /* 表头行 */
-thead tr:first-child th{position:sticky;top:0;z-index:10;background:#eef1f8;color:#444;font-size:12px;font-weight:600;text-align:center;padding:8px 7px;border-bottom:2px solid #c5cae9;white-space:nowrap}
+thead tr:first-child th{position:sticky;top:0;z-index:10;background:#eef1f8;color:#444;font-size:12px;font-weight:600;text-align:center;padding:8px 5px;border-bottom:2px solid #c5cae9;white-space:nowrap}
+thead tr:first-child th:first-child{max-width:70px;overflow:hidden}
+thead tr:first-child th:nth-child(2){max-width:100px;overflow:hidden}
 thead tr:first-child th:first-child{left:0;z-index:11}
 
 /* 重庆行 */
-thead tr.cq-row th{position:sticky;top:30px;z-index:9;font-size:11.5px;font-weight:500;padding:7px 7px;
+thead tr.cq-row th{position:sticky;top:30px;z-index:9;font-size:11.5px;font-weight:500;padding:7px 5px;
   background:linear-gradient(180deg,#fff8e1,#fff3cd);color:#795548;border-bottom:2px solid #ffe0b2;text-align:center}
 thead tr.cq-row th:first-child{left:0;z-index:10}
 thead tr.cq-row th.cq-label{color:#e65100;font-weight:600}
 
-th.col-group{background:#ede7f6;color:#4527a0;font-size:12px}
+th.col-group{background:#ede7f6;color:#4527a0;font-size:11px;padding:8px 3px}
+/* Horizontal table: compact name + data col group */
+.section th:first-child,.section td:first-child{max-width:65px;overflow:hidden;text-overflow:ellipsis}
+.table-wrap table{font-size:12px}
 
-tbody td{padding:8px 7px;border-bottom:1px solid #eee;text-align:center;vertical-align:middle;white-space:nowrap;font-size:12.5px}
-tbody td:first-child{position:sticky;left:0;background:#fff;z-index:5;font-weight:500;text-align:left;padding-left:14px}
+tbody td{padding:8px 5px;border-bottom:1px solid #eee;text-align:center;vertical-align:middle;white-space:nowrap;font-size:12.5px}
+tbody td:first-child{position:sticky;left:0;background:#fff;z-index:5;font-weight:500;text-align:left;padding:8px 6px 8px 10px;max-width:70px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+tbody td:nth-child(2):not(.col-group){
+  max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap
+}
 tbody tr:hover td{background:#f8f9ff}
 tbody tr:hover td:first-child{background:#f0f2ff}
 
