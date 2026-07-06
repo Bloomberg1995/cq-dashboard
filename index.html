@@ -322,7 +322,7 @@ function renderSections(){
     h+='<div class="section"><div class="section-title">🏆 核心指标综合排名 <span class="target">门店业绩(目标15000)×50% + 加单率(目标8%)×50%，超额满分</span></div>';
     h+='<div class="table-wrap" style="overflow-x:auto"><table style="min-width:680px"><thead><tr>';
     h+='<th style="width:50px;text-align:center">#</th>';
-    h+='<th style="text-align:left">姓名</th>';
+    h+='<th style="text-align:left;width:72px">姓名</th>';
     h+='<th style="text-align:center;width:95px">🏪 门店业绩</th>';
     h+='<th style="text-align:center;width:70px">得分</th>';
     h+='<th style="text-align:center;width:95px">➕ 加单率</th>';
@@ -334,7 +334,7 @@ function renderSections(){
       var rankCls=r.rank<=3?'rank-top':r.rank<=10?'rank-mid':'rank-low';
       h+='<tr>';
       h+='<td style="text-align:center;font-weight:700;font-size:16px" class="'+rankCls+'">'+r.rank+'</td>';
-      h+='<td style="font-weight:600">'+r.name+'</td>';
+      h+='<td style="font-weight:600;max-width:72px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+r.name+'</td>';
       // Store: value + score
       h+='<td style="text-align:center">¥'+r.store_val.toLocaleString()+'</td>';
       h+='<td style="text-align:center" class="'+pctCls(r.store_score)+'">'+r.store_score+'分</td>';
