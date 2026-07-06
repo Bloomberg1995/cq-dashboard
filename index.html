@@ -458,7 +458,7 @@ function renderSingle(person){
     var rkCls=myRank.rank<=3?'rank-top':myRank.rank<=10?'rank-mid':'rank-low';
     var storeBar=Math.min(myRank.store_score,100);
     var addonBar=Math.min(myRank.addon_score,100);
-    h+='<div class="summary-card" style="background:linear-gradient(135deg,#1a1a2e,#16213e);margin-bottom:12px">';
+    h+='<div class="summary-card" style="background:linear-gradient(135deg,#e8eaf6,#c5cae9);margin-bottom:12px;border:1px solid #9fa8da">';
     h+='<div class="sc-body" style="width:100%">';
     h+='<div class="sc-title" style="font-size:15px">🏆 核心指标排名 — <span class="'+rkCls+'">第'+myRank.rank+'名 / 共'+rnkData.length+'人</span></div>';
     h+='<div class="sc-sub" style="display:flex;justify-content:space-between;flex-wrap:wrap;margin-top:8px">';
