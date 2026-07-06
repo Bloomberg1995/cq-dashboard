@@ -229,8 +229,8 @@ function fmtPct(v){
 
 function pctCls(p){
   if(p==null||p===undefined||isNaN(p)) return '';
-  if(p>=100) return 'pct-good';
-  if(p>95) return 'pct-mid';
+  var tp=D.time_progress||0.16;
+  if(p>=tp*100) return 'pct-good';
   return 'pct-bad';
 }
 
@@ -240,8 +240,8 @@ function valCls(ok){
 
 function barCls(p){
   if(p==null||p===undefined||isNaN(p)) return '';
-  if(p>=100) return 'bar-good';
-  if(p>95) return 'bar-mid';
+  var tp=D.time_progress||0.16;
+  if(p>=tp*100) return 'bar-good';
   return 'bar-bad';
 }
 
@@ -299,8 +299,8 @@ function buildNav(){
 function renderStatus(v,p){
   if(v==null||v===undefined) return 'status-unknown';
   if(p==null||p===undefined) return 'status-unknown';
-  if(p>=100) return 'status-good';
-  if(p>95) return 'status-mid';
+  var tp=D.time_progress||0.16;
+  if(p>=tp*100) return 'status-good';
   return 'status-bad';
 }
 
@@ -505,7 +505,7 @@ function openCoreDetail(idx){
   var h='';
   h+='<div style="padding:12px 16px;background:#f5f5f5;border-radius:8px;margin-bottom:12px">';
   h+='<div style="font-size:18px;font-weight:700;margin-bottom:8px">当前值：'+c.value+'</div>';
-  h+='<div style="font-size:14px;color:#666">目标：'+c.target+' | 达成率：<span class="'+(c.pct>=100?'pct-good':c.pct>=95?'pct-warn':'pct-bad')+'">'+fmtPct(c.pct)+'</span></div>';
+  var tp2=D.time_progress||0.16; h+='<div style="font-size:14px;color:#666">目标：'+c.target+' | 达成率：<span class="'+(c.pct>=tp2*100?'pct-good':'pct-bad')+'">'+fmtPct(c.pct)+'</span></div>';
   h+='</div>';
   h+='<div style="font-size:13px;color:#666;padding:12px 0">该指标为重庆区域整体月达成KPI。</div>';
   document.getElementById('modalBody2').innerHTML=h;
