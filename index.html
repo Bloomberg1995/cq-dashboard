@@ -291,6 +291,19 @@ function render(){
 function buildNav(){
   var bar=document.getElementById('navBar');
   bar.innerHTML='<span class="label">⚡ 快速跳转：</span>';
+  // 排名按钮
+  if(D.ranking&&D.ranking.length>0){
+    var rBtn=document.createElement('button');
+    rBtn.textContent='🏆 排名';
+    rBtn.onclick=function(){
+      var el=document.getElementById('rank_section');
+      if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
+      document.querySelectorAll('#navBar button').forEach(function(b){b.classList.remove('active')});
+      rBtn.classList.add('active');
+      setTimeout(function(){rBtn.classList.remove('active')},2000);
+    };
+    bar.appendChild(rBtn);
+  }
   D.sections.forEach(function(s,i){
     var btn=document.createElement('button');
     btn.textContent=s.name;
@@ -320,7 +333,7 @@ function renderSections(){
   // ===== 前置：核心指标排名 =====
   var rnk=D.ranking||[];
   if(rnk.length>0){
-    h+='<div class="section"><div class="section-title">🏆 核心指标综合排名 <span class="target">门店业绩(目标15000)×50% + 加单率(目标8%)×50%，超额满分</span></div>';
+    h+='<div class="section" id="rank_section"><div class="section-title">🏆 核心指标综合排名 <span class="target">门店业绩(目标15000)×50% + 加单率(目标8%)×50%，超额满分</span></div>';
     h+='<div class="table-wrap" style="overflow-x:auto"><table style="min-width:680px"><thead><tr>';
     h+='<th style="width:50px;text-align:center">#</th>';
     h+='<th style="text-align:left;width:72px">姓名</th>';
