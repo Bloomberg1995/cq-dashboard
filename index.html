@@ -202,7 +202,7 @@ tbody tr:hover td:first-child{background:#f0f2ff}
 </div>
 <div class="toolbar">
   <label>👤 选择人员：</label>
-  <select id="personSelect" autocomplete="off"></select>
+  <form autocomplete="off" style="display:inline"><select id="personSelect" autocomplete="off"></select></form>
   <span class="info" id="personInfo"></span>
 </div>
 <div class="nav-bar" id="navBar" style="display: none;"><span class="label">⚡ 快速跳转：</span><button data-idx="0">催单率</button><button data-idx="1">入库超时率</button><button data-idx="2">普通单过程数据</button><button data-idx="3">跟进及时率(到天)</button><button data-idx="4">加单率</button><button data-idx="5">ETA履约准时率</button><button data-idx="6">一站式过程数据</button><button data-idx="7">交付用户添加率</button><button data-idx="8">企微1v1回访率</button><button data-idx="9">企微回复及时率</button></div>
@@ -269,10 +269,12 @@ function barW(p){
   // 强制重置下拉框避免浏览器缓存上次选择
   sel.value = '';
   render();
-  // 加载后200ms内忽略change，防浏览器自动填充恢复上次选择
-  var _locked = true;
-  setTimeout(function(){ _locked = false; }, 200);
-  sel.addEventListener('change', function(){ if(_locked) return; render(); });
+  sel.addEventListener('change', function(){ render(); });
+  // 浏览器自动填充在load事件后恢复select值，延迟再重置一次
+  window.addEventListener('load', function(){
+    sel.value = '';
+    render();
+  });
 
 function render(){
   var v=document.getElementById('personSelect').value;
