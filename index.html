@@ -3,7 +3,6 @@
 <html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="build-time" content="2026-07-09T13:10:00+08:00">
 <title>重庆上门数据看板 (2026-07-09)</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -356,7 +355,7 @@ function renderSections(){
       <div style="display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center">
         <label style="font-size:13px;color:#555">🏪 门店业绩目标：<input id="rs_storeT" type="number" value="'+sf.storeTarget+'" style="width:100px;padding:4px 8px;border:1px solid #ccc;border-radius:6px;font-size:13px" onchange="rankSettingsDirty()"></label>
         <label style="font-size:13px;color:#555">➕ 加单率目标：<input id="rs_addonT" type="number" step="0.1" value="'+sf.addonTarget+'" style="width:80px;padding:4px 8px;border:1px solid #ccc;border-radius:6px;font-size:13px" onchange="rankSettingsDirty()">%</label>
-        <label style="font-size:13px;color:#555">🏪 门店权重：<input id="rs_sw" type="range" min="0" max="100" value="'+sf.storeWeight+'" style="width:120px;vertical-align:middle" oninput="document.getElementById('rs_sw_v').textContent=this.value;document.getElementById('rs_aw').value=100-this.value;document.getElementById('rs_aw_v').textContent=100-this.value;rankSettingsDirty()"> <span id="rs_sw_v" style="font-weight:600">'+sf.storeWeight+'</span>%</label>
+        <label style="font-size:13px;color:#555">🏪 门店权重：<input id="rs_sw" type="range" min="0" max="100" value="'+sf.storeWeight+'" style="width:120px;vertical-align:middle" oninput="rankSliderChange(this)"> <span id="rs_sw_v" style="font-weight:600">'+sf.storeWeight+'</span>%</label>
         <label style="font-size:13px;color:#555">➕ 加单率权重：<input id="rs_aw" type="range" min="0" max="100" value="'+sf.addonWeight+'" disabled style="width:120px;vertical-align:middle;opacity:.6"> <span id="rs_aw_v" style="font-weight:600;color:#999">'+sf.addonWeight+'</span>%</label>
         <button onclick="applyRankSettings()" style="padding:6px 20px;background:#1a237e;color:#fff;border:none;border-radius:6px;font-size:13px;cursor:pointer;font-weight:500">✅ 应用</button>
         <button onclick="resetRankSettings()" style="padding:6px 14px;background:#fff;color:#666;border:1px solid #ccc;border-radius:6px;font-size:12px;cursor:pointer">↩️ 重置</button>
@@ -449,6 +448,12 @@ function renderSections(){
 }
 
 // ===== 排名快速调整 =====
+function rankSliderChange(el){
+  document.getElementById('rs_sw_v').textContent=el.value;
+  document.getElementById('rs_aw').value=100-el.value;
+  document.getElementById('rs_aw_v').textContent=100-el.value;
+  rankSettingsDirty();
+}
 function toggleRankSettings(){
   var panel=document.getElementById('rankSettings');
   panel.style.display=panel.style.display==='none'?'block':'none';
@@ -745,8 +750,6 @@ function closeModal(e){
   document.getElementById('modalOverlay').classList.remove('show');
 }
 
-console.log("D.people count:",(D.people||[]).length);
-console.log("Build time: 2026-07-09T13:10");
 init();
 </script>
 
