@@ -3,6 +3,7 @@
 <html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="build-time" content="2026-07-09T13:10:00+08:00">
 <title>重庆上门数据看板 (2026-07-09)</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -744,6 +745,8 @@ function closeModal(e){
   document.getElementById('modalOverlay').classList.remove('show');
 }
 
+console.log("D.people count:",(D.people||[]).length);
+console.log("Build time: 2026-07-09T13:10");
 init();
 </script>
 
