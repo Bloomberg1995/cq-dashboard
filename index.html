@@ -263,10 +263,12 @@ function barW(p){
 }
 
   sel.innerHTML='';
-  var all=document.createElement('option');all.value='';all.textContent='全部（按板块查看）';all.selected=true;sel.appendChild(all);
+  var all=document.createElement('option');all.value='';all.textContent='全部（按板块查看）';sel.appendChild(all);
   var cq=document.createElement('option');cq.value='__CHONGQING__';cq.textContent='🏙️ 重庆（区域总览）';sel.appendChild(cq);
   D.people.forEach(function(p){var o=document.createElement('option');o.value=p;o.textContent=p;sel.appendChild(o)});
   sel.addEventListener('change',render);
+  // 强制重置下拉框避免浏览器缓存上次选择
+  sel.value = '';
   render();
 
 function render(){
@@ -750,7 +752,7 @@ function closeModal(e){
   document.getElementById('modalOverlay').classList.remove('show');
 }
 
-init();
+// init(); // removed - top-level code handles initialization
 </script>
 
 
