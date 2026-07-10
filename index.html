@@ -426,7 +426,7 @@ function renderSections(){
       h+='<tr class="cq-row"><th style="background:transparent;width:36px"></th><th class="cq-label">🏙 重庆区域</th>';
       cq.cols.forEach(function(c){
         h+='<th>'+c.name+'</th>';
-        h+='<th>'+fmtVal(c.value,c.section)+'</th>';
+        h+='<th>'+fmtVal(c.value,sec.name)+'</th>';
         h+='<th><span class="'+pctCls(c.pct)+'">'+fmtPct(c.pct)+'</span></th>';
       });
       h+='</tr></thead><tbody>';
@@ -723,7 +723,7 @@ function renderChongqing(){
   h+='<div style="margin-bottom:20px"><div class="section-title" style="margin-bottom:12px">📊 日常运营指标 <span style="font-size:13px;color:#999;font-weight:400">（达成率从低到高排序）</span></div><div class="cq-grid">';
   D.chongqing_cards.forEach(function(c,idx){
     var st=renderStatus(c.value,c.pct);
-    var vv=c.value!==null&&c.value!==undefined?fmtVal(c.value,sec.name):'-';
+    var vv=c.value!==null&&c.value!==undefined?fmtVal(c.value,c.section):'-';
     h+='<div class="cq-card '+st+'" onclick="openCardDetail('+idx+')">';
     h+='<div class="cq-card-header"><div><div class="cq-card-name">'+c.indicator+'</div><div class="cq-card-section">'+c.section+'</div></div><div style="text-align:right;font-size:12px"><span class="'+pctCls(c.pct)+'" style="font-weight:700;font-size:16px">'+fmtPct(c.pct)+'</span><br><span style="color:#999">达成率</span></div></div>';
     h+='<div class="cq-card-body"><span class="cq-card-value '+st+'">'+vv+'</span><div class="cq-card-meta">区域均值</div></div>';
