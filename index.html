@@ -73,7 +73,7 @@ tbody tr:hover td:first-child{background:#f0f2ff}
 .rank-top{color:#d4a017}.rank-mid{color:#e65100}.rank-low{color:#999}
 .pct-mid{color:#ef6c00;font-weight:600}
 .val-good{color:#2e7d32}
-.val-bad{color:#c62828;font-weight:600}
+.val-bad{color:#c62828;font-weight:600;background:#ffebee;border-radius:6px}
 .bar-good{background:linear-gradient(90deg,#66bb6a,#43a047)}
 .bar-mid{background:linear-gradient(90deg,#ffb74d,#fb8c00)}
 .bar-bad{background:linear-gradient(90deg,#ef5350,#c62828)}
@@ -81,7 +81,7 @@ tbody tr:hover td:first-child{background:#f0f2ff}
 .status-mid{border-left-color:#fb8c00!important}
 .status-bad{border-left-color:#c62828!important}
 .status-unknown{border-left-color:#999!important}
-.val-ok{color:#2e7d32;font-weight:500}.val-warn{color:#e65100;font-weight:500}.val-bad{color:#c62828;font-weight:500}
+.val-ok{color:#2e7d32;font-weight:500}.val-warn{color:#e65100;font-weight:500}.val-bad{color:#c62828;font-weight:500;background:#ffebee;border-radius:6px}
 
 /* 聚合表 */
 .agg-table thead th{background:#1a237e;color:#fff;border-color:#3949ab}
@@ -805,7 +805,7 @@ function openCardDetail(cardIdx){
     h+='<td style="padding:8px 10px;text-align:center;'+cls+'">'+fmtVal(r.value,sec.name)+'</td>';
     h+='<td style="padding:8px 10px;text-align:center"><span class="'+pctCls(r.pct)+'" style="font-weight:700">'+fmtPct(r.pct)+'</span></td>';
     if(hasDaily){
-      if(r.daily&&r.daily.length>0) r.daily.forEach(function(d){h+='<td style="padding:8px 10px;text-align:center;'+(d.ok?'':'val-bad')+'">'+d.val+'</td>'});
+      if(r.daily&&r.daily.length>0) r.daily.forEach(function(d){h+='<td class="'+(d.ok?'':'val-bad')+'" style="padding:8px 10px;text-align:center">'+d.val+'</td>'});
       else dates.forEach(function(){h+='<td style="padding:8px 10px;text-align:center">-</td>'});
     }
     h+='</tr>';
