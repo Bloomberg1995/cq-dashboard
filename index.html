@@ -426,7 +426,7 @@ function renderSections(){
       h+='<tr class="cq-row"><th style="background:transparent;width:36px"></th><th class="cq-label">🏙 重庆区域</th>';
       cq.cols.forEach(function(c){
         h+='<th>'+c.name+'</th>';
-        h+='<th>'+fmtVal(c.value,sec.name)+'</th>';
+        h+='<th>'+fmtVal(c.value,c.section)+'</th>';
         h+='<th><span class="'+pctCls(c.pct)+'">'+fmtPct(c.pct)+'</span></th>';
       });
       h+='</tr></thead><tbody>';
