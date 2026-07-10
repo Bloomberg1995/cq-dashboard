@@ -581,6 +581,16 @@ function renderSingle(person){
   h+='<div class="sc-bar-wrap"><div class="sc-bar-seg bad" style="width:'+Math.round(bad.length/all.length*100)+'%"></div><div class="sc-bar-seg warn" style="width:'+Math.round(warn.length/all.length*100)+'%"></div><div class="sc-bar-seg good" style="width:'+Math.round(good.length/all.length*100)+'%"></div></div>';
   h+='</div></div>';
 
+  // === 雷达图卡片 ===
+  var rData=D.radar_data&&D.radar_data[person];
+  if(rData){
+    h+='<div style="background:#fff;border:1px solid #e0e0e0;border-radius:10px;padding:12px;margin-bottom:12px">';
+    h+='<div style="font-size:14px;font-weight:600;color:#333;margin-bottom:4px">🎯 关键指标雷达</div>';
+    h+='<div style="font-size:11px;color:#999;margin-bottom:8px">得分越高越接近目标</div>';
+    h+='<div style="display:flex;justify-content:center"><canvas id="radarCanvas" width="280" height="280" style="width:280px;height:280px"></canvas></div>';
+    h+='<div id="radarTip" style="font-size:11px;color:#666;text-align:center;min-height:16px">悬停顶点查看明细</div>';
+    h+='</div>';
+  }
 
   // === 急需改善模块：达成率 < 95% ===
   var bad=all.filter(function(r){return r.pct!==null&&r.pct!==undefined&&r.pct<96});
