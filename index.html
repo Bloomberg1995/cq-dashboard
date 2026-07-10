@@ -361,7 +361,8 @@ function renderSections(){
     h+='<th style="text-align:center;width:130px">📊 综合总分 <span style="font-weight:400;color:#999;font-size:11px">(加权)</span></th>';
     h+='</tr></thead><tbody>';
 
-    rnk.forEach(function(r){
+    var rnkSorted=rnk.slice().reverse();
+    rnkSorted.forEach(function(r){
       var rankCls=r.rank<=3?'rank-top':r.rank<=10?'rank-mid':'rank-low';
       h+='<tr>';
       h+='<td style="text-align:center;font-weight:700;font-size:16px" class="'+rankCls+'">'+r.rank+'</td>';
