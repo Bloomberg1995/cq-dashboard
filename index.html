@@ -416,7 +416,7 @@ function renderSections(){
 
     if(sec.type==='horizontal'){
       // 表头
-      h+='<thead><tr><th style="width:36px;text-align:center">#</th><th>人员</th>';
+      h+='<thead><tr><th style="width:36px;text-align:center">名次</th><th>人员</th>';
       sec.col_headers.forEach(function(ch){
         h+='<th class="col-group">'+ch+'</th><th>达成</th><th>达成率</th>';
       });
@@ -439,7 +439,7 @@ function renderSections(){
       var hPrevPct=undefined, hPrevRank=0;
       hRows.forEach(function(row,ri){
         var avgPct=row.cols.reduce(function(s,c){return s+(c.pct||0)},0)/(row.cols.length||1);
-        var thisRank=(ri===0||avgPct!==hPrevPct)?(ri+1):hPrevRank;
+        var thisRank=Math.max(1,hRows.length-ri);
         h+='<tr><td style="text-align:center;color:#999;font-size:12px">'+thisRank+'</td><td>'+row.name+'</td>';
         hPrevPct=avgPct; hPrevRank=thisRank;
         row.cols.forEach(function(col){
@@ -450,7 +450,7 @@ function renderSections(){
         h+='</tr>';
       });
     }else{
-      h+='<thead><tr><th style="width:36px;text-align:center">#</th><th>人员</th><th>指标</th><th>目标</th><th>月度达成</th><th>达成率</th>';
+      h+='<thead><tr><th style="width:36px;text-align:center">名次</th><th>人员</th><th>指标</th><th>目标</th><th>月度达成</th><th>达成率</th>';
       if(sec.name==='加单率'){
         h+='<th>月加单量</th><th>普通<br>单量</th><th>普通<br>占比</th><th>一站式<br>量</th><th>一站式<br>占比</th><th>企微<br>量</th><th>企微<br>占比</th>';
       }
@@ -483,7 +483,7 @@ function renderSections(){
       var vPrevVal=undefined, vPrevRank=0;
       vRows.forEach(function(row,ri){
         var sortVal=row.monthly||0;
-        var thisRank=(ri===0||sortVal!==vPrevVal)?(ri+1):vPrevRank;
+        var thisRank=Math.max(1,vRows.length-ri);
         h+='<tr><td style="text-align:center;color:#999;font-size:12px">'+thisRank+'</td><td>'+row.name+'</td>';
         vPrevVal=sortVal; vPrevRank=thisRank;
         h+='<td style="color:#555;text-align:left;padding-left:12px">'+row.indicator+'</td>';
