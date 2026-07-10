@@ -625,6 +625,66 @@ function renderSingle(person){
   }
 }
 
+// ========== 雷达图绘制 ==========
+function drawRadar(cid, data){
+  var cv=document.getElementById(cid);
+  if(!cv||!data||data.length<3) return;
+  var ctx=cv.getContext('2d');
+  var W=280, H=280;
+  cv.width=W; cv.height=H;
+  var cx=W/2, cy=H/2-4;
+  var R=100, n=data.length, step=2*Math.PI/n;
+  [0.2,0.4,0.6,0.8,1.0].forEach(function(lv){
+    ctx.beginPath();
+    for(var i=0;i<=n;i++){
+      var a=-Math.PI/2+i%n*step;
+      var x=cx+R*lv*Math.cos(a), y=cy+R*lv*Math.sin(a);
+      i==0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+    }
+    ctx.closePath(); ctx.strokeStyle='rgba(200,200,200,0.4)'; ctx.lineWidth=1; ctx.stroke();
+  });
+  for(var i=0;i<n;i++){
+    var a=-Math.PI/2+i*step;
+    ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(cx+R*Math.cos(a),cy+R*Math.sin(a));
+    ctx.strokeStyle='rgba(200,200,200,0.3)'; ctx.lineWidth=1; ctx.stroke();
+  }
+  ctx.beginPath();
+  for(var i=0;i<=n;i++){
+    var idx=i%n, a=-Math.PI/2+idx*step;
+    var s=Math.min((data[idx].score||0)/100,1);
+    var x=cx+R*s*Math.cos(a), y=cy+R*s*Math.sin(a);
+    i==0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+  }
+  ctx.closePath();
+  ctx.fillStyle='rgba(33,150,243,0.18)'; ctx.fill();
+  ctx.strokeStyle='#1565c0'; ctx.lineWidth=2; ctx.stroke();
+  var tip=document.getElementById('radarTip');
+  data.forEach(function(d,i){
+    var a=-Math.PI/2+i*step, s=Math.min((d.score||0)/100,1);
+    var px=cx+R*s*Math.cos(a), py=cy+R*s*Math.sin(a);
+    ctx.beginPath(); ctx.arc(px,py,4,0,2*Math.PI);
+    ctx.fillStyle=d.score>=80?'#2e7d32':(d.score>=50?'#f9a825':'#c62828');
+    ctx.fill(); ctx.strokeStyle='#fff'; ctx.lineWidth=1.5; ctx.stroke();
+    var lx=cx+(R+20)*Math.cos(a), ly=cy+(R+20)*Math.sin(a);
+    ctx.fillStyle='#333'; ctx.font='10px PingFang SC,sans-serif'; ctx.textAlign='center'; ctx.textBaseline='middle';
+    ctx.fillText(d.name,lx,ly);
+    ctx.fillStyle='#1565c0'; ctx.font='bold 9px sans-serif';
+    ctx.fillText(d.score+'分',cx+(R*s+14)*Math.cos(a),cy+(R*s+14)*Math.sin(a));
+  });
+  cv.onmousemove=function(e){
+    var rect=cv.getBoundingClientRect();
+    var mx=(e.clientX-rect.left)*(W/rect.width), my=(e.clientY-rect.top)*(H/rect.height);
+    var found=null, minD=25;
+    data.forEach(function(d,i){
+      var a=-Math.PI/2+i*step, s=Math.min((d.score||0)/100,1);
+      var px=cx+R*s*Math.cos(a), py=cy+R*s*Math.sin(a);
+      var dd=Math.sqrt((mx-px)*(mx-px)+(my-py)*(my-py));
+      if(dd<minD){ minD=dd; found=i; }
+    });
+    if(tip) tip.textContent=found!==null&&minD<18? data[found].name+'：'+data[found].score+'分 (实际='+(data[found].value!=null?data[found].value:'-')+', 目标='+data[found].target+')' : '悬停顶点查看明细';
+  };
+}
+
 // ========== 重庆区域总览（可点击卡片）==========
 function renderChongqing(){
   var h='';
