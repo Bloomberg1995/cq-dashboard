@@ -433,8 +433,12 @@ function renderSections(){
         var pb=b.cols.reduce(function(s,c){return s+(c.pct||0)},0)/(b.cols.length||1);
         return pb-pa;
       });
+      var hPrevPct=undefined, hPrevRank=0;
       hRows.forEach(function(row,ri){
-        h+='<tr><td style="text-align:center;color:#999;font-size:12px">'+(ri+1)+'</td><td>'+row.name+'</td>';
+        var avgPct=row.cols.reduce(function(s,c){return s+(c.pct||0)},0)/(row.cols.length||1);
+        var thisRank=(ri===0||avgPct!==hPrevPct)?(ri+1):hPrevRank;
+        h+='<tr><td style="text-align:center;color:#999;font-size:12px">'+thisRank+'</td><td>'+row.name+'</td>';
+        hPrevPct=avgPct; hPrevRank=thisRank;
         row.cols.forEach(function(col){
           h+='<td style="font-size:11px;color:#777">'+col.name+'<br><small style="color:#999">🎯'+col.target+'</small></td>';
           h+='<td class="'+valCls(col.ok)+'">'+fmtVal(col.value)+'</td>';
@@ -473,8 +477,12 @@ function renderSections(){
         var lowBetter=sec.name==='催单率'||sec.name==='入库超时率';
         return lowBetter?(a.monthly||0)-(b.monthly||0):(b.monthly||0)-(a.monthly||0);
       });
+      var vPrevVal=undefined, vPrevRank=0;
       vRows.forEach(function(row,ri){
-        h+='<tr><td style="text-align:center;color:#999;font-size:12px">'+(ri+1)+'</td><td>'+row.name+'</td>';
+        var sortVal=row.monthly||0;
+        var thisRank=(ri===0||sortVal!==vPrevVal)?(ri+1):vPrevRank;
+        h+='<tr><td style="text-align:center;color:#999;font-size:12px">'+thisRank+'</td><td>'+row.name+'</td>';
+        vPrevVal=sortVal; vPrevRank=thisRank;
         h+='<td style="color:#555;text-align:left;padding-left:12px">'+row.indicator+'</td>';
         h+='<td>'+row.target+'</td>';
         h+='<td class="'+valCls(row.ok)+'">'+fmtVal(row.monthly)+'</td>';
