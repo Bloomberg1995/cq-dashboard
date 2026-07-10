@@ -268,7 +268,7 @@ function barW(p){
   var cq=document.createElement('option');cq.value='__CHONGQING__';cq.textContent='🏙️ 重庆（区域总览）';sel.appendChild(cq);
   D.people.forEach(function(p){var o=document.createElement('option');o.value=p;o.textContent=p;sel.appendChild(o)});
   sel.addEventListener('change',render);
-  render();
+  try{render();}catch(e){console.error('Render error:',e);document.getElementById('mainContent').innerHTML='<div style="padding:20px;color:red">JS Error: '+e.message+'</div>';}
 
 function render(){
   var v=document.getElementById('personSelect').value;
