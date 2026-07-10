@@ -3,7 +3,7 @@
 <html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>重庆上门数据看板 (2026-07-09)</title>
+<title>重庆上门数据看板 (2026-07-10)</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;background:#f0f2f5;color:#333}
@@ -197,7 +197,7 @@ tbody tr:hover td:first-child{background:#f0f2ff}
 <body>
 
 <div class="header">
-  <h1>📊 (2026-07-09)</h1>
+  <h1>📊 (2026-07-10)</h1>
   <div class="sub" id="dateLine">P26/07/08</div>
 </div>
 <div class="toolbar">
@@ -388,7 +388,11 @@ function renderSections(){
       });
       h+='</tr></thead><tbody>';
 
-      sec.rows.forEach(function(row){
+      sec.rows.slice().sort(function(a,b){
+        var pa=a.cols.reduce(function(s,c){return s+(c.pct||0)},0)/(a.cols.length||1);
+        var pb=b.cols.reduce(function(s,c){return s+(c.pct||0)},0)/(b.cols.length||1);
+        return pb-pa;
+      }).forEach(function(row){
         h+='<tr><td>'+row.name+'</td>';
         row.cols.forEach(function(col){
           h+='<td style="font-size:11px;color:#777">'+col.name+'<br><small style="color:#999">🎯'+col.target+'</small></td>';
@@ -424,7 +428,7 @@ function renderSections(){
       }
       h+='</tr></thead><tbody>';
 
-      sec.rows.forEach(function(row){
+      sec.rows.slice().sort(function(a,b){return (b.pct||0)-(a.pct||0)}).forEach(function(row){
         h+='<tr><td>'+row.name+'</td>';
         h+='<td style="color:#555;text-align:left;padding-left:12px">'+row.indicator+'</td>';
         h+='<td>'+row.target+'</td>';
