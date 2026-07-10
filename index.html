@@ -434,7 +434,7 @@ function renderSections(){
       var hRows=sec.rows.slice().sort(function(a,b){
         var pa=a.cols.reduce(function(s,c){return s+(c.pct||0)},0)/(a.cols.length||1);
         var pb=b.cols.reduce(function(s,c){return s+(c.pct||0)},0)/(b.cols.length||1);
-        return pb-pa;
+        return pa-pb;
       });
       var hPrevPct=undefined, hPrevRank=0;
       hRows.forEach(function(row,ri){
@@ -478,7 +478,7 @@ function renderSections(){
 
       var vRows=sec.rows.slice().sort(function(a,b){
         var lowBetter=sec.name==='催单率'||sec.name==='入库超时率';
-        return lowBetter?(a.monthly||0)-(b.monthly||0):(b.monthly||0)-(a.monthly||0);
+        return lowBetter?(b.monthly||0)-(a.monthly||0):(a.monthly||0)-(b.monthly||0);
       });
       var vPrevVal=undefined, vPrevRank=0;
       vRows.forEach(function(row,ri){
@@ -706,7 +706,7 @@ function renderChongqing(){
   if(D.chongqing_core_indicators&&D.chongqing_core_indicators.length>0){
     h+='<div style="margin-bottom:24px"><div class="section-title" style="margin-bottom:12px">🏢 区域核心指标 <span style="font-size:13px;color:#999;font-weight:400">（重庆区域月度KPI）</span></div>';
     h+='<div class="core-grid">';
-    D.chongqing_core_indicators.sort(function(a,b){return a.pct-b.pct;}).forEach(function(c,idx){
+    D.chongqing_core_indicators.sort(function(a,b){return b.pct-a.pct;}).forEach(function(c,idx){
       var tp=D.time_progress||0.16;
       var cls='core-'+(c.pct>=tp*100?'good':'bad');
       h+='<div class="core-card '+cls+'" onclick="openCoreDetail('+idx+')">';
@@ -777,7 +777,7 @@ function openCardDetail(cardIdx){
   });
 
   // 按达成率排序（最差在前）
-  rows.sort(function(a,b){return (a.pct||100)-(b.pct||100)});
+  rows.sort(function(a,b){return (b.pct||100)-(a.pct||100)});
 
   var hasDaily=rows.some(function(r){return r.daily&&r.daily.length>0});
   var dates=[];
