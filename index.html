@@ -304,6 +304,20 @@ function buildNav(){
     };
     bar.appendChild(rBtn);
   }
+  // 末尾考核按钮
+  var assm=D.assessment_ranking||[];
+  if(assm.length>0){
+    var aBtn=document.createElement('button');
+    aBtn.textContent='📋 末尾考核';
+    aBtn.onclick=function(){
+      var el=document.getElementById('assm_section');
+      if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
+      document.querySelectorAll('#navBar button').forEach(function(b){b.classList.remove('active')});
+      aBtn.classList.add('active');
+      setTimeout(function(){aBtn.classList.remove('active')},2000);
+    };
+    bar.appendChild(aBtn);
+  }
   D.sections.forEach(function(s,i){
     var btn=document.createElement('button');
     btn.textContent=s.name;
