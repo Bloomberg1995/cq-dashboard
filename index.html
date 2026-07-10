@@ -568,11 +568,9 @@ function renderSingle(person){
   var validPct=all.filter(function(r){return r.pct!==null&&r.pct!==undefined});
   var avgPct=validPct.length>0?Math.round(validPct.reduce(function(a,b){return a+b.pct},0)/validPct.length):0;
   var avatarCls=bad.length>=3?'bad':(bad.length>0?'mid':'good');
-  h+='<div style="display:flex;gap:12px;margin-bottom:12px">';
-  h+='<div style="flex:1;min-width:0">';
-  h+='<div class="summary-card">';
+  h+='<div class="summary-card" style="align-items:stretch">';
   h+='<div class="sc-avatar '+avatarCls+'">'+avgPct+'%</div>';
-  h+='<div class="sc-body">';
+  h+='<div class="sc-body" style="flex:1">';
   h+='<div class="sc-title">📊 '+person+' — 综合概览</div>';
   h+='<div class="sc-sub">共'+all.length+'项考核指标 · 平均达成率'+avgPct+'%</div>';
   h+='<div class="sc-stats">';
@@ -581,19 +579,15 @@ function renderSingle(person){
   h+='<div class="sc-stat"><span class="sc-stat-num bad">'+bad.length+'</span><span class="sc-stat-label">🔴 异常</span></div>';
   h+='</div>';
   h+='<div class="sc-bar-wrap"><div class="sc-bar-seg bad" style="width:'+Math.round(bad.length/all.length*100)+'%"></div><div class="sc-bar-seg warn" style="width:'+Math.round(warn.length/all.length*100)+'%"></div><div class="sc-bar-seg good" style="width:'+Math.round(good.length/all.length*100)+'%"></div></div>';
-  h+='</div></div>';
   h+='</div>';
 
-  // === 雷达图卡片 ===
+  // === 雷达图（放入综合概览卡片内）===
   var rData=D.radar_data&&D.radar_data[person];
   if(rData){
-    h+='<div style="width:360px;min-width:360px">';
-    h+='<div style="background:#fff;border:1px solid #e0e0e0;border-radius:10px;padding:12px">';
-    h+='<div style="font-size:14px;font-weight:600;color:#333;margin-bottom:4px">🎯 关键指标雷达</div>';
-    h+='<div style="font-size:11px;color:#999;margin-bottom:8px">得分越高越接近目标</div>';
-    h+='<div style="display:flex;justify-content:center"><canvas id="radarCanvas" width="280" height="280" style="width:280px;height:280px"></canvas></div>';
-    h+='<div id="radarTip" style="font-size:11px;color:#666;text-align:center;min-height:16px">悬停顶点查看明细</div>';
-    h+='</div>';
+    h+='<div style="width:320px;min-width:320px;padding:8px 0 0 8px;border-left:1px solid #e0e0e0">';
+    h+='<div style="font-size:13px;font-weight:600;color:#333;margin-bottom:4px;text-align:center">🎯 关键指标雷达</div>';
+    h+='<div style="display:flex;justify-content:center"><canvas id="radarCanvas" width="240" height="240" style="width:240px;height:240px"></canvas></div>';
+    h+='<div id="radarTip" style="font-size:10px;color:#666;text-align:center;min-height:14px">悬停查看明细</div>';
     h+='</div>';
   }
   h+='</div>';
