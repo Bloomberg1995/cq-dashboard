@@ -267,7 +267,6 @@ function barW(p){
   var all=document.createElement('option');all.value='';all.textContent='全部（按板块查看）';all.selected=true;sel.appendChild(all);
   var cq=document.createElement('option');cq.value='__CHONGQING__';cq.textContent='🏙️ 重庆（区域总览）';sel.appendChild(cq);
   D.people.forEach(function(p){var o=document.createElement('option');o.value=p;o.textContent=p;sel.appendChild(o)});
-  console.log('Starting dashboard...');
   sel.addEventListener('change',render);
   render();
 
