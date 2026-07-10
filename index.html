@@ -373,14 +373,14 @@ function renderSections(){
 
     if(sec.type==='horizontal'){
       // 表头
-      h+='<thead><tr><th>人员</th>';
+      h+='<thead><tr><th style="width:36px;text-align:center">#</th><th>人员</th>';
       sec.col_headers.forEach(function(ch){
         h+='<th class="col-group">'+ch+'</th><th>达成</th><th>达成率</th>';
       });
       h+='</tr>';
       // 重庆行
       var cq=sec.chongqing_row;
-      h+='<tr class="cq-row"><th class="cq-label">🏙 重庆区域</th>';
+      h+='<tr class="cq-row"><th style="background:transparent;width:36px"></th><th class="cq-label">🏙 重庆区域</th>';
       cq.cols.forEach(function(c){
         h+='<th>'+c.name+'</th>';
         h+='<th>'+fmtVal(c.value)+'</th>';
@@ -388,12 +388,13 @@ function renderSections(){
       });
       h+='</tr></thead><tbody>';
 
-      sec.rows.slice().sort(function(a,b){
+      var hRows=sec.rows.slice().sort(function(a,b){
         var pa=a.cols.reduce(function(s,c){return s+(c.pct||0)},0)/(a.cols.length||1);
         var pb=b.cols.reduce(function(s,c){return s+(c.pct||0)},0)/(b.cols.length||1);
         return pb-pa;
-      }).forEach(function(row){
-        h+='<tr><td>'+row.name+'</td>';
+      });
+      hRows.forEach(function(row,ri){
+        h+='<tr><td style="text-align:center;color:#999;font-size:12px">'+(ri+1)+'</td><td>'+row.name+'</td>';
         row.cols.forEach(function(col){
           h+='<td style="font-size:11px;color:#777">'+col.name+'<br><small style="color:#999">🎯'+col.target+'</small></td>';
           h+='<td class="'+valCls(col.ok)+'">'+fmtVal(col.value)+'</td>';
@@ -402,7 +403,7 @@ function renderSections(){
         h+='</tr>';
       });
     }else{
-      h+='<thead><tr><th>人员</th><th>指标</th><th>目标</th><th>月度达成</th><th>达成率</th>';
+      h+='<thead><tr><th style="width:36px;text-align:center">#</th><th>人员</th><th>指标</th><th>目标</th><th>月度达成</th><th>达成率</th>';
       if(sec.name==='加单率'){
         h+='<th>月加单量</th><th>普通<br>单量</th><th>普通<br>占比</th><th>一站式<br>量</th><th>一站式<br>占比</th><th>企微<br>量</th><th>企微<br>占比</th>';
       }
@@ -412,7 +413,7 @@ function renderSections(){
       }
       h+='</tr>';
       // 重庆行
-      h+='<tr class="cq-row"><th class="cq-label">🏙 重庆区域</th>';
+      h+='<tr class="cq-row"><th style="background:transparent;width:36px"></th><th class="cq-label">🏙 重庆区域</th>';
       h+='<th>'+cq.indicator+'</th>';
       h+='<th>'+cq.target+'</th>';
       h+='<th>'+fmtVal(cq.monthly)+'</th>';
@@ -428,8 +429,9 @@ function renderSections(){
       }
       h+='</tr></thead><tbody>';
 
-      sec.rows.slice().sort(function(a,b){return (b.pct||0)-(a.pct||0)}).forEach(function(row){
-        h+='<tr><td>'+row.name+'</td>';
+      var vRows=sec.rows.slice().sort(function(a,b){return (b.monthly||0)-(a.monthly||0)});
+      vRows.forEach(function(row,ri){
+        h+='<tr><td style="text-align:center;color:#999;font-size:12px">'+(ri+1)+'</td><td>'+row.name+'</td>';
         h+='<td style="color:#555;text-align:left;padding-left:12px">'+row.indicator+'</td>';
         h+='<td>'+row.target+'</td>';
         h+='<td class="'+valCls(row.ok)+'">'+fmtVal(row.monthly)+'</td>';
