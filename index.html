@@ -802,7 +802,7 @@ function openCardDetail(cardIdx){
     h+='<td style="padding:8px 10px;text-align:center;font-weight:600;color:#'+(idx<3?(r.pct<96?'c62828':'e65100'):'#999')+'">'+(idx+1)+'</td>';
     h+='<td style="padding:8px 10px;font-weight:500">'+r.name+'</td>';
     h+='<td style="padding:8px 10px;text-align:center;color:#666">'+r.target+'</td>';
-    h+='<td style="padding:8px 10px;text-align:center;'+cls+'">'+fmtVal(r.value,sec.name)+'</td>';
+    h+='<td style="padding:8px 10px;text-align:center;'+cls+'">'+fmtVal(r.value,secName)+'</td>';
     h+='<td style="padding:8px 10px;text-align:center"><span class="'+pctCls(r.pct)+'" style="font-weight:700">'+fmtPct(r.pct)+'</span></td>';
     if(hasDaily){
       if(r.daily&&r.daily.length>0) r.daily.forEach(function(d){h+='<td class="'+(d.ok?'':'val-bad')+'" style="padding:8px 10px;text-align:center">'+d.val+'</td>'});
