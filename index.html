@@ -707,7 +707,7 @@ function renderChongqing(){
   if(D.chongqing_core_indicators&&D.chongqing_core_indicators.length>0){
     h+='<div style="margin-bottom:24px"><div class="section-title" style="margin-bottom:12px">🏢 区域核心指标 <span style="font-size:13px;color:#999;font-weight:400">（重庆区域月度KPI）</span></div>';
     h+='<div class="core-grid">';
-    D.chongqing_core_indicators.sort(function(a,b){return b.pct-a.pct;}).forEach(function(c,idx){
+    D.chongqing_core_indicators.sort(function(a,b){return a.pct-b.pct;}).forEach(function(c,idx){
       var tp=D.time_progress||0.16;
       var cls='core-'+(c.pct>=tp*100?'good':'bad');
       h+='<div class="core-card '+cls+'" onclick="openCoreDetail('+idx+')">';
@@ -722,7 +722,7 @@ function renderChongqing(){
     h+='</div></div>';
   }
   h+='<div style="margin-bottom:20px"><div class="section-title" style="margin-bottom:12px">📊 日常运营指标 <span style="font-size:13px;color:#999;font-weight:400">（达成率从低到高排序）</span></div><div class="cq-grid">';
-  D.chongqing_cards.forEach(function(c,idx){
+  D.chongqing_cards.slice().sort(function(a,b){return a.pct-b.pct;}).forEach(function(c,idx){
     var st=renderStatus(c.value,c.pct);
     var vv=c.value!==null&&c.value!==undefined?c.value:'-';
     h+='<div class="cq-card '+st+'" onclick="openCardDetail('+idx+')">';
@@ -778,7 +778,7 @@ function openCardDetail(cardIdx){
   });
 
   // 按达成率排序（最差在前）
-  rows.sort(function(a,b){return (b.pct||100)-(a.pct||100)});
+  rows.sort(function(a,b){return (a.pct||100)-(b.pct||100)});
 
   var hasDaily=rows.some(function(r){return r.daily&&r.daily.length>0});
   var dates=[];
