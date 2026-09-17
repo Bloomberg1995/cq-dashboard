@@ -448,6 +448,14 @@ table.v5-hct thead tr.cq-row th{text-align:center;font-weight:650}
 .v5-proc{margin-top:18px}
 .v5-proc .section-title .target{font-weight:400}
 
+/* 单人视图 · 明细表：板块/指标列不截断 + 指标名后迷你折线 */
+table.v5-one-t{width:auto;min-width:100%}
+table.v5-one-t th:nth-child(1),table.v5-one-t td:nth-child(1),
+table.v5-one-t th:nth-child(2),table.v5-one-t td:nth-child(2){white-space:nowrap}
+table.v5-one-t td:nth-child(1){padding-right:16px}
+table.v5-one-t td:nth-child(2){padding-right:10px}
+table.v5-one-t td:nth-child(2) .v5-spark{margin-left:8px;opacity:.95}
+
 </style>
 </head>
 <body>
@@ -1746,6 +1754,32 @@ function closeModal(e){
     else mc.appendChild(box);
   }
 
+  /* ---------- 单人视图：明细表列宽 + 指标名后迷你折线 ---------- */
+  function enhanceSingle(person) {
+    var mc = document.getElementById('mainContent');
+    if (!mc || !V.sections) return;
+    var tbl = mc.querySelector('table.agg-table');
+    if (!tbl) return;
+    var ths = tbl.querySelectorAll('thead th');
+    if (!ths.length || ths[0].textContent.trim() !== '\u677f\u5757') return;
+    tbl.classList.add('v5-one-t');
+    if (tbl.dataset && tbl.dataset.v5one) return;
+    if (tbl.dataset) tbl.dataset.v5one = '1';
+    var tb = tbl.querySelector('tbody');
+    if (!tb) return;
+    Array.prototype.forEach.call(tb.querySelectorAll('tr'), function (tr) {
+      if (tr.cells.length < 5) return;
+      var sec = tr.cells[0].textContent.trim();
+      var s = V.sections[sec];
+      if (!s) return;                        // 过程数据（无到天）不加
+      var r = null;
+      for (var i = 0; i < s.rows.length; i++) {
+        if (s.rows[i].name === person) { r = s.rows[i]; break; }
+      }
+      tr.cells[1].insertAdjacentHTML('beforeend', spark(r ? r.vals : null, s.dates, s.fmt));
+    });
+  }
+
   /* ---------- 挂钩老看板的渲染函数 ---------- */
   var _orig = window.renderSections;
   if (typeof _orig === 'function') {
@@ -1755,6 +1789,7 @@ function closeModal(e){
       window.renderSingle = function () {
         _origSingle.apply(this, arguments);
         try { splitProc(); } catch (e) { console.warn('[v5] proc', e); }
+        try { enhanceSingle(arguments[0]); } catch (e) { console.warn('[v5] one', e); }
         neutralize();
       };
     }
