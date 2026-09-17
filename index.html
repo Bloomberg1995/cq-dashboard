@@ -441,6 +441,9 @@ table.v5-hct td.val-good,table.v5-hct td.val-bad,table.v5-hct td.val-none{
 table.v5-hct thead tr th:nth-child(n+3){text-align:center;line-height:1.35}
 table.v5-hct thead tr.cq-row th{text-align:center;font-weight:650}
 
+/* 名次变化面板 · 口径说明 */
+.v5-note{font-size:11.5px;color:#7c989b;line-height:1.55;margin:0 0 8px;padding:6px 9px;background:#f2f8f9;border-left:3px solid #9fd0d6;border-radius:4px}
+
 </style>
 </head>
 <body>
@@ -1358,7 +1361,10 @@ function closeModal(e){
     }).join('');
     h = '<div class="v5-delta-cols">' + h + '</div>';
     var win = V.rank_window || [];
-    box.innerHTML = h + '<div class="v5-legend"><span><i style="background:' + OKC + '"></i>名次上升</span>'
+    var note = '\u53e3\u5f84\uff1a\u6bcf\u65e5\u6309 12 \u4e2a\u5173\u952e\u677f\u5757\u7684\u8fbe\u6210\u7387\u53d6\u5e73\u5747\u5206\u6392\u540d'
+      + '\uff08\u9ad8\u4f18 = \u503c\u00f7\u76ee\u6807\uff0c\u4f4e\u4f18 = \u76ee\u6807\u00f7\u503c\uff0c\u5f53\u5929\u22653 \u9879\u624d\u53c2\u4e0e\uff09'
+      + '\uff1b\u5bf9\u6bd4\u7a97\u53e3\u9996\u65e5\u4e0e\u672b\u65e5\u540d\u6b21\u3002';
+    box.innerHTML = '<div class="v5-note">' + note + '</div>' + h + '<div class="v5-legend"><span><i style="background:' + OKC + '"></i>名次上升</span>'
       + '<span><i style="background:' + BADC + '"></i>名次下降</span>'
       + '<span>' + (win[0] || '') + ' → ' + (win[win.length - 1] || '') + '</span></div>';
   }
