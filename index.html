@@ -444,6 +444,10 @@ table.v5-hct thead tr.cq-row th{text-align:center;font-weight:650}
 /* 名次变化面板 · 口径说明 */
 .v5-note{font-size:11.5px;color:#7c989b;line-height:1.55;margin:0 0 8px;padding:6px 9px;background:#f2f8f9;border-left:3px solid #9fd0d6;border-radius:4px}
 
+/* 单人视图 · 过程数据单独卡片 */
+.v5-proc{margin-top:18px}
+.v5-proc .section-title .target{font-weight:400}
+
 </style>
 </head>
 <body>
@@ -1711,11 +1715,49 @@ function closeModal(e){
     neutralize();
   }
   if (typeof window.renderChongqing === 'function') window.renderChongqing = renderCQ;
+  if (typeof window.renderSingle === 'function') { window.renderSingleOrig = window.renderSingle; }
+
+  /* ---------- 单人视图：过程数据（无到天）单独拎出来 ---------- */
+  var PROC_SECS = ['\u666e\u901a\u5355\u8fc7\u7a0b\u6570\u636e', '\u4e00\u7ad9\u5f0f\u8fc7\u7a0b\u6570\u636e'];
+  function splitProc() {
+    var mc = document.getElementById('mainContent');
+    if (!mc) return;
+    var tbl = mc.querySelector('table.agg-table');
+    if (!tbl) return;
+    var ths = tbl.querySelectorAll('thead th');
+    if (!ths.length || ths[0].textContent.trim() !== '\u677f\u5757') return;
+    var rows = Array.prototype.slice.call(tbl.querySelectorAll('tbody tr'));
+    var picked = rows.filter(function (tr) {
+      return tr.cells.length && PROC_SECS.indexOf(tr.cells[0].textContent.trim()) >= 0;
+    });
+    if (!picked.length) return;
+    picked.forEach(function (tr) { while (tr.cells.length > 5) tr.removeChild(tr.cells[5]); });
+    var box = document.createElement('div');
+    box.className = 'section v5-proc';
+    box.innerHTML = '<div class="section-title">\u25A3 \u8fc7\u7a0b\u6570\u636e'
+      + ' <span class="target">\u65e0\u5230\u5929\u6570\u636e \u00b7 \u5355\u72ec\u5217\u51fa\uff08' + picked.length + ' \u9879\uff09</span></div>'
+      + '<div class="table-wrap"><table class="agg-table v5-proct"><thead><tr>'
+      + '<th>\u677f\u5757</th><th>\u6307\u6807</th><th>\u76ee\u6807</th><th>\u6708\u5ea6\u8fbe\u6210</th><th>\u8fbe\u6210\u7387</th>'
+      + '</tr></thead><tbody></tbody></table></div>';
+    var tb2 = box.querySelector('tbody');
+    picked.forEach(function (tr) { tb2.appendChild(tr); });
+    var sec = tbl.closest ? tbl.closest('.section') : null;
+    if (sec && sec.parentNode) sec.parentNode.insertBefore(box, sec.nextSibling);
+    else mc.appendChild(box);
+  }
 
   /* ---------- 挂钩老看板的渲染函数 ---------- */
   var _orig = window.renderSections;
   if (typeof _orig === 'function') {
     window.renderSections = function () { _orig.apply(this, arguments); try { enhance(); } catch (e) { console.warn('[v5]', e); } neutralize(); };
+    var _origSingle = window.renderSingle;
+    if (typeof _origSingle === 'function') {
+      window.renderSingle = function () {
+        _origSingle.apply(this, arguments);
+        try { splitProc(); } catch (e) { console.warn('[v5] proc', e); }
+        neutralize();
+      };
+    }
     try { render(); } catch (e) { console.warn('[v5] rerender', e); }
     neutralize();
     // 单人视图 / 弹窗等局部渲染后也会产生彩色 emoji：观察 DOM 变化自动再替换一次
