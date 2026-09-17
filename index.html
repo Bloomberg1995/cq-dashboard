@@ -456,6 +456,11 @@ table.v5-one-t td:nth-child(1){padding-right:16px}
 table.v5-one-t td:nth-child(2){padding-right:10px}
 table.v5-one-t td:nth-child(2) .v5-spark{margin-left:8px;opacity:.95}
 
+/* 单人视图 · 覆盖模板对前两列的 max-width 截断 */
+table.v5-one-t th:nth-child(1),table.v5-one-t td:nth-child(1),
+table.v5-one-t th:nth-child(2),table.v5-one-t td:nth-child(2){
+  max-width:none!important;overflow:visible!important;text-overflow:clip!important;white-space:nowrap}
+
 </style>
 </head>
 <body>
